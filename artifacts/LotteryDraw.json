@@ -1,0 +1,1100 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"acceptOwnership()": "79ba5097",
+			"allRounds(uint256)": "e1bf07b7",
+			"automationRegistry()": "5dc228a0",
+			"bulkTicketsWithRandomNumbers(uint8)": "dc65c843",
+			"buyTicket(uint8[5])": "cc957f28",
+			"buyTicketWithRandomNumbers()": "b933dcba",
+			"callbackGasLimit()": "24f74697",
+			"currentRound()": "8a19c8bc",
+			"distributePrizes(uint8)": "61edf9b2",
+			"drawNumbers()": "676c902f",
+			"drawNumbersManually(uint8[5])": "b2189cac",
+			"emergencyWithdraw()": "db2e21bc",
+			"fundPrizePool()": "88b2f7c3",
+			"getAllTicketsForRound(uint256)": "85705ad3",
+			"getMyTickets(uint256)": "c81d9217",
+			"getPrizePoolInUSD()": "6a91da2b",
+			"getWinningAddresses(uint256)": "75b26d21",
+			"getWinningNumbers(uint256)": "9d5c35ae",
+			"getusdTicketPriceInBNB()": "d11532b7",
+			"lastDrawTime()": "5cbbd635",
+			"lastRequestId()": "fc2a88c3",
+			"numWords()": "7ccfd7fc",
+			"owner()": "8da5cb5b",
+			"pause()": "8456cb59",
+			"paused()": "5c975abb",
+			"pendingDraw()": "88ed5d64",
+			"playerTickets(uint256,address,uint256)": "dc7fe6a5",
+			"rawFulfillRandomWords(uint256,uint256[])": "1fe543e3",
+			"requestConfirmations()": "b0fb162f",
+			"roundInProgress()": "ea5ab0ba",
+			"roundLocked(uint256)": "1706672a",
+			"s_keyHash()": "45bb327b",
+			"s_subscriptionId()": "8ac00021",
+			"s_vrfCoordinator()": "9eccacf6",
+			"setAutomationRegistry(address)": "5ff2d2aa",
+			"setCallbackGasLimit(uint32)": "a4eb718c",
+			"setCoordinator(address)": "8ea98117",
+			"setPendingDraw(bool)": "667640eb",
+			"setUsdTicketPrice(uint256)": "bc076f52",
+			"setWinnersSubmitted(bool)": "25d75795",
+			"submitWinners(uint256,address[],address[],address[])": "4ac2a741",
+			"totalTicketsPerDraw(uint256)": "87cc17b1",
+			"transferOwnership(address)": "f2fde38b",
+			"uniqueParticipantsPerDraw(uint256)": "c3279f8f",
+			"unpause()": "3f4ba83a",
+			"updatePriceFeed(address)": "95877f78",
+			"updateSubscriptionId(uint256)": "2b09d310",
+			"updateVRFSettings(address,bytes32)": "f664e752",
+			"usdTicketPrice()": "63ecd0c3",
+			"winnerSubmissionDeadline()": "8ea2d9ef",
+			"winnersSubmitted()": "a9ecbf69"
+		}
+	},
+	"abi": [
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "have",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "want",
+					"type": "address"
+				}
+			],
+			"name": "OnlyCoordinatorCanFulfill",
+			"type": "error"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "have",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "owner",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "coordinator",
+					"type": "address"
+				}
+			],
+			"name": "OnlyOwnerOrCoordinator",
+			"type": "error"
+		},
+		{
+			"inputs": [],
+			"name": "ZeroAddress",
+			"type": "error"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "vrfCoordinator",
+					"type": "address"
+				}
+			],
+			"name": "CoordinatorSet",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "requestId",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint8[5]",
+					"name": "winningNumbers",
+					"type": "uint8[5]"
+				}
+			],
+			"name": "DrawFulfilled",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "requestId",
+					"type": "uint256"
+				}
+			],
+			"name": "DrawRequested",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				}
+			],
+			"name": "DrawStarted",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "recipient",
+					"type": "address"
+				}
+			],
+			"name": "EmergencyWithdrawal",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "from",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "to",
+					"type": "address"
+				}
+			],
+			"name": "OwnershipTransferRequested",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "from",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "to",
+					"type": "address"
+				}
+			],
+			"name": "OwnershipTransferred",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "sender",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "PrizePoolFunded",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint8",
+					"name": "tier",
+					"type": "uint8"
+				}
+			],
+			"name": "PrizesDistributed",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint8[5]",
+					"name": "numbers",
+					"type": "uint8[5]"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				}
+			],
+			"name": "TicketPurchased",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				}
+			],
+			"name": "WinnersSubmitted",
+			"type": "event"
+		},
+		{
+			"inputs": [],
+			"name": "acceptOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "allRounds",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "timestamp",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "prizePool",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "prizesDistributed",
+					"type": "bool"
+				},
+				{
+					"internalType": "uint256",
+					"name": "rollover",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "prizeAmount3",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "prizeAmount4",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "prizeAmount5",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "automationRegistry",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint8",
+					"name": "ticketCount",
+					"type": "uint8"
+				}
+			],
+			"name": "bulkTicketsWithRandomNumbers",
+			"outputs": [],
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint8[5]",
+					"name": "numbers",
+					"type": "uint8[5]"
+				}
+			],
+			"name": "buyTicket",
+			"outputs": [],
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "buyTicketWithRandomNumbers",
+			"outputs": [],
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "callbackGasLimit",
+			"outputs": [
+				{
+					"internalType": "uint32",
+					"name": "",
+					"type": "uint32"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "currentRound",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint8",
+					"name": "tier",
+					"type": "uint8"
+				}
+			],
+			"name": "distributePrizes",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "drawNumbers",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint8[5]",
+					"name": "manualNumbers",
+					"type": "uint8[5]"
+				}
+			],
+			"name": "drawNumbersManually",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "emergencyWithdraw",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "fundPrizePool",
+			"outputs": [],
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				}
+			],
+			"name": "getAllTicketsForRound",
+			"outputs": [
+				{
+					"internalType": "address[]",
+					"name": "players",
+					"type": "address[]"
+				},
+				{
+					"internalType": "uint8[5][]",
+					"name": "numbersList",
+					"type": "uint8[5][]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				}
+			],
+			"name": "getMyTickets",
+			"outputs": [
+				{
+					"internalType": "address[]",
+					"name": "players",
+					"type": "address[]"
+				},
+				{
+					"internalType": "uint8[5][]",
+					"name": "numbersList",
+					"type": "uint8[5][]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "getPrizePoolInUSD",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				}
+			],
+			"name": "getWinningAddresses",
+			"outputs": [
+				{
+					"internalType": "address[]",
+					"name": "winners3",
+					"type": "address[]"
+				},
+				{
+					"internalType": "address[]",
+					"name": "winners4",
+					"type": "address[]"
+				},
+				{
+					"internalType": "address[]",
+					"name": "winners5",
+					"type": "address[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				}
+			],
+			"name": "getWinningNumbers",
+			"outputs": [
+				{
+					"internalType": "uint8[5]",
+					"name": "",
+					"type": "uint8[5]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "getusdTicketPriceInBNB",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "lastDrawTime",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "lastRequestId",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "numWords",
+			"outputs": [
+				{
+					"internalType": "uint32",
+					"name": "",
+					"type": "uint32"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "owner",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "pause",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "paused",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "pendingDraw",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "playerTickets",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "requestId",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256[]",
+					"name": "randomWords",
+					"type": "uint256[]"
+				}
+			],
+			"name": "rawFulfillRandomWords",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "requestConfirmations",
+			"outputs": [
+				{
+					"internalType": "uint16",
+					"name": "",
+					"type": "uint16"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "roundInProgress",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "roundLocked",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "s_keyHash",
+			"outputs": [
+				{
+					"internalType": "bytes32",
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "s_subscriptionId",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "s_vrfCoordinator",
+			"outputs": [
+				{
+					"internalType": "contract IVRFCoordinatorV2Plus",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_registry",
+					"type": "address"
+				}
+			],
+			"name": "setAutomationRegistry",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint32",
+					"name": "_newLimit",
+					"type": "uint32"
+				}
+			],
+			"name": "setCallbackGasLimit",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_vrfCoordinator",
+					"type": "address"
+				}
+			],
+			"name": "setCoordinator",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bool",
+					"name": "value",
+					"type": "bool"
+				}
+			],
+			"name": "setPendingDraw",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "newPrice",
+					"type": "uint256"
+				}
+			],
+			"name": "setUsdTicketPrice",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bool",
+					"name": "value",
+					"type": "bool"
+				}
+			],
+			"name": "setWinnersSubmitted",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "round",
+					"type": "uint256"
+				},
+				{
+					"internalType": "address[]",
+					"name": "_winners3",
+					"type": "address[]"
+				},
+				{
+					"internalType": "address[]",
+					"name": "_winners4",
+					"type": "address[]"
+				},
+				{
+					"internalType": "address[]",
+					"name": "_winners5",
+					"type": "address[]"
+				}
+			],
+			"name": "submitWinners",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "totalTicketsPerDraw",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "to",
+					"type": "address"
+				}
+			],
+			"name": "transferOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "uniqueParticipantsPerDraw",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "unpause",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_newFeed",
+					"type": "address"
+				}
+			],
+			"name": "updatePriceFeed",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "newSubId",
+					"type": "uint256"
+				}
+			],
+			"name": "updateSubscriptionId",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_coordinator",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "_keyHash",
+					"type": "bytes32"
+				}
+			],
+			"name": "updateVRFSettings",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "usdTicketPrice",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "winnerSubmissionDeadline",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "winnersSubmitted",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	]
+}

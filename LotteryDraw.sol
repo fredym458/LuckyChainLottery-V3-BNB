@@ -3,8 +3,12 @@ pragma solidity 0.8.19;
 
 import "./LotteryTickets.sol";
 import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";  // Added for security
 
-abstract contract LotteryDraw is LotteryTickets {
+abstract contract LotteryDraw is LotteryTickets, ReentrancyGuard {  // Inherits ReentrancyGuard
+    // Add reentrancy lock state variable
+    bool private _distributing;
+
     function drawNumbers() public onlyOwner {
         _drawNumbers(); 
     }
@@ -69,7 +73,10 @@ abstract contract LotteryDraw is LotteryTickets {
         emit WinnersSubmitted(round);
     }
 
-    function distributePrizes(uint8 tier) external onlyOwner {
+    function distributePrizes(uint8 tier) external onlyOwner nonReentrant {  // Added nonReentrant modifier
+        require(!_distributing, "Distribution in progress");  // Additional custom lock
+        _distributing = true;  // Lock before processing
+        
         require(winnersSubmitted, "Winners not submitted");
         Round storage r = allRounds[roundInProgress];
         require(!r.prizesDistributed, "Prizes already distributed");
@@ -83,15 +90,7 @@ abstract contract LotteryDraw is LotteryTickets {
         else if (tier == 4) prizeAmount = r.prizeAmount4;
         else prizeAmount = r.prizeAmount5;
         
-        if (winners.length > 0) {
-            uint256 share = prizeAmount / winners.length;
-            for(uint i = 0; i < winners.length; i++) {
-                (bool success, ) = winners[i].call{value: share}("");
-                require(success, "Transfer failed");
-            }
-            
-        }
-        
+        // UPDATE STATE BEFORE EXTERNAL CALLS
         if (tier == 5) {
             r.prizesDistributed = true;
             currentRound++;
@@ -99,6 +98,16 @@ abstract contract LotteryDraw is LotteryTickets {
             pendingDraw = false;
         }
         
+        // Perform payments after state updates
+        if (winners.length > 0) {
+            uint256 share = prizeAmount / winners.length;
+            for(uint i = 0; i < winners.length; i++) {
+                // Use transfer instead of call for fixed gas
+                payable(winners[i]).transfer(share);
+            }
+        }
+        
+        _distributing = false;  // Release lock after processing
         emit PrizesDistributed(roundInProgress, tier);
     }
 
@@ -108,7 +117,6 @@ abstract contract LotteryDraw is LotteryTickets {
         roundInProgress = currentRound;
         
         allRounds[currentRound].prizePool = address(this).balance;
-       
 
         lastRequestId = s_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
@@ -128,32 +136,32 @@ abstract contract LotteryDraw is LotteryTickets {
         emit DrawStarted(roundInProgress);
     }
 
-    // function drawNumbersManually(uint8[5] memory manualNumbers) external onlyOwner {
-    //     require(_validateNumbers(manualNumbers), "Invalid winning numbers");
+    function drawNumbersManually(uint8[5] memory manualNumbers) external onlyOwner {
+        require(_validateNumbers(manualNumbers), "Invalid winning numbers");
         
-    //     // Lock current round
-    //     pendingDraw = true;
-    //     roundLocked[currentRound] = true;
-    //     roundInProgress = currentRound;
-        
-        
-    //     allRounds[currentRound].prizePool = address(this).balance;
+        // Lock current round
+        pendingDraw = true;
+        roundLocked[currentRound] = true;
+        roundInProgress = currentRound;
         
         
-    //     // Set winning numbers
-    //     allRounds[currentRound].winningNumbers = manualNumbers;
-    //     allRounds[currentRound].timestamp = block.timestamp;
+        allRounds[currentRound].prizePool = address(this).balance;
         
-    //     // Set submission deadline
-    //     winnerSubmissionDeadline = block.timestamp + 1 hours;
         
-    //     // Update last draw time
-    //     lastDrawTime = block.timestamp;
+        // Set winning numbers
+        allRounds[currentRound].winningNumbers = manualNumbers;
+        allRounds[currentRound].timestamp = block.timestamp;
         
-    //     // Simulate VRF completion
-    //     emit DrawStarted(currentRound);
-    //     emit DrawFulfilled(1234, manualNumbers);  // Dummy request ID 1234
+        // Set submission deadline
+        winnerSubmissionDeadline = block.timestamp + 1 hours;
         
-    //     // Finalization will happen through distributePrizes(5)
-    // }
+        // Update last draw time
+        lastDrawTime = block.timestamp;
+        
+        // Simulate VRF completion
+        emit DrawStarted(currentRound);
+        emit DrawFulfilled(1234, manualNumbers);  // Dummy request ID 1234
+        
+        // Finalization will happen through distributePrizes(5)
+    }  
 }
