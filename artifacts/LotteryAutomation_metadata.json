@@ -1159,6 +1159,14 @@
 				"dweb:/ipfs/QmWzLDgcS9jUh4AT65dQRr46ZhGHgQ4KoNfSdFiFTFqneQ"
 			]
 		},
+		"@openzeppelin/contracts/security/ReentrancyGuard.sol": {
+			"keccak256": "0xa535a5df777d44e945dd24aa43a11e44b024140fc340ad0dfe42acf4002aade1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://41319e7f621f2dc3733511332c4fd032f8e32ad2aa7fd6f665c19741d9941a34",
+				"dweb:/ipfs/QmcYR3bd862GD1Bc7jwrU9bGxrhUu5na1oP964bDCu2id1"
+			]
+		},
 		"LotteryAutomation.sol": {
 			"keccak256": "0x49dabdc8104d47ca0497da91ebee714af3ac924546a38899fc066215a1f59b65",
 			"license": "MIT",
@@ -1168,19 +1176,19 @@
 			]
 		},
 		"LotteryBase.sol": {
-			"keccak256": "0x70ed46072ec70f55a6c4aef6c82207cfda6175efa22a9dc6f96ab7c6b9949265",
+			"keccak256": "0x7e55ac47602d3c48a0ae6c94105d13b5155ad0b1b572b7ff5ab13f0d8c17f3b2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f1e1167fa138a3fce38af60ae13457f29b1875066acab108ebaf489c2ca1e88f",
-				"dweb:/ipfs/QmWrBecPcdUJPLSaCbWhFdCqMgrwqC4UsTNCXJ9SWdj1Gf"
+				"bzz-raw://6735b2873753420f0b7679f63ded166e1e25a9afb92ad6f99b7c6a6ac8d02bf5",
+				"dweb:/ipfs/QmdWg9S9fQG3RBahhsoJBFr7pYXhJRfVDxSwLJNx9iFc5o"
 			]
 		},
 		"LotteryDraw.sol": {
-			"keccak256": "0x4bfe32450512417eb21f381269ce022940e0ee7d9c7ef40dec9233c4611dbfd3",
+			"keccak256": "0xd906c6d49e3a102319f13c0011ee9373a76566a37bbacc6bdd04ad4c593705b0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2de276dcd58ded004479f08dcbfb1c19e3ade007b736fbb1bce2c5552c13f247",
-				"dweb:/ipfs/QmSXGboiN6hiWGzfTCVSWcAbBNpEYqKmHL8syeFh5XBcBC"
+				"bzz-raw://729581b4d67e52b763efc864f117d07ceb2e3197cf7e0f742ff10d3ae9f3f5b4",
+				"dweb:/ipfs/Qmeuat9WfYCwfbs1z5NxPF5rKtcaNDrZeGqDdNTCWvo4ZE"
 			]
 		},
 		"LotteryTickets.sol": {

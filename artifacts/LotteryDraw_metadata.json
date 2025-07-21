@@ -387,19 +387,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint8[5]",
-						"name": "manualNumbers",
-						"type": "uint8[5]"
-					}
-				],
-				"name": "drawNumbersManually",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "emergencyWithdraw",
 				"outputs": [],
@@ -1120,19 +1107,19 @@
 			]
 		},
 		"LotteryBase.sol": {
-			"keccak256": "0x70ed46072ec70f55a6c4aef6c82207cfda6175efa22a9dc6f96ab7c6b9949265",
+			"keccak256": "0x7e55ac47602d3c48a0ae6c94105d13b5155ad0b1b572b7ff5ab13f0d8c17f3b2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f1e1167fa138a3fce38af60ae13457f29b1875066acab108ebaf489c2ca1e88f",
-				"dweb:/ipfs/QmWrBecPcdUJPLSaCbWhFdCqMgrwqC4UsTNCXJ9SWdj1Gf"
+				"bzz-raw://6735b2873753420f0b7679f63ded166e1e25a9afb92ad6f99b7c6a6ac8d02bf5",
+				"dweb:/ipfs/QmdWg9S9fQG3RBahhsoJBFr7pYXhJRfVDxSwLJNx9iFc5o"
 			]
 		},
 		"LotteryDraw.sol": {
-			"keccak256": "0x2cc7ff04c9c4d3ad61fe8a98c822241fafe14b8327a48996fa97a83da84ac883",
+			"keccak256": "0xd906c6d49e3a102319f13c0011ee9373a76566a37bbacc6bdd04ad4c593705b0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e0fbb4e5a07360af00c6d5263da0a22ae95db2f1ab1d5416c6cd3e75a52976a6",
-				"dweb:/ipfs/QmdikgieG4hiiNytRpcg75sphFLCCddrJfeA7oomdnspQc"
+				"bzz-raw://729581b4d67e52b763efc864f117d07ceb2e3197cf7e0f742ff10d3ae9f3f5b4",
+				"dweb:/ipfs/Qmeuat9WfYCwfbs1z5NxPF5rKtcaNDrZeGqDdNTCWvo4ZE"
 			]
 		},
 		"LotteryTickets.sol": {

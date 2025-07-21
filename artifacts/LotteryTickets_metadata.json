@@ -1051,11 +1051,11 @@
 			]
 		},
 		"LotteryBase.sol": {
-			"keccak256": "0x70ed46072ec70f55a6c4aef6c82207cfda6175efa22a9dc6f96ab7c6b9949265",
+			"keccak256": "0x7e55ac47602d3c48a0ae6c94105d13b5155ad0b1b572b7ff5ab13f0d8c17f3b2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f1e1167fa138a3fce38af60ae13457f29b1875066acab108ebaf489c2ca1e88f",
-				"dweb:/ipfs/QmWrBecPcdUJPLSaCbWhFdCqMgrwqC4UsTNCXJ9SWdj1Gf"
+				"bzz-raw://6735b2873753420f0b7679f63ded166e1e25a9afb92ad6f99b7c6a6ac8d02bf5",
+				"dweb:/ipfs/QmdWg9S9fQG3RBahhsoJBFr7pYXhJRfVDxSwLJNx9iFc5o"
 			]
 		},
 		"LotteryTickets.sol": {

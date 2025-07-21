@@ -43,9 +43,9 @@ abstract contract LotteryBase is VRFConsumerBaseV2Plus {
     mapping(uint256 => bool) public roundLocked;
 
     AggregatorV3Interface internal priceFeed;
-    address vrfCoordinator = 0xDA3b641D438362C440Ac5458c57e00a712b66700;
+    address vrfCoordinator = 0xd691f04bc0C9a24Edb78af9E005Cf85768F694C9;
     uint256 public s_subscriptionId;
-    bytes32 public s_keyHash = 0x8596b430971ac45bdf6088665b9ad8e8630c9d5049ab54b14dff711bee7c0e26;
+    bytes32 public s_keyHash = 0x130dba50ad435d4ecc214aad0d5820474137bd68e7e77724144f27c3c377d3d4;
     uint32 public callbackGasLimit = 500000;
     uint16 public requestConfirmations = 3;
     uint32 public numWords = 1;
@@ -71,7 +71,7 @@ abstract contract LotteryBase is VRFConsumerBaseV2Plus {
 
 
     constructor(uint256 subscriptionId) VRFConsumerBaseV2Plus(vrfCoordinator) {
-        priceFeed = AggregatorV3Interface(0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526);
+        priceFeed = AggregatorV3Interface(0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE);
         lastDrawTime = block.timestamp;
         currentRound = 1;
         paused = false;

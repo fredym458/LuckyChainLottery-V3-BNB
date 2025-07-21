@@ -136,32 +136,32 @@ abstract contract LotteryDraw is LotteryTickets, ReentrancyGuard {  // Inherits 
         emit DrawStarted(roundInProgress);
     }
 
-    function drawNumbersManually(uint8[5] memory manualNumbers) external onlyOwner {
-        require(_validateNumbers(manualNumbers), "Invalid winning numbers");
+    // function drawNumbersManually(uint8[5] memory manualNumbers) external onlyOwner {
+    //     require(_validateNumbers(manualNumbers), "Invalid winning numbers");
         
-        // Lock current round
-        pendingDraw = true;
-        roundLocked[currentRound] = true;
-        roundInProgress = currentRound;
-        
-        
-        allRounds[currentRound].prizePool = address(this).balance;
+    //     // Lock current round
+    //     pendingDraw = true;
+    //     roundLocked[currentRound] = true;
+    //     roundInProgress = currentRound;
         
         
-        // Set winning numbers
-        allRounds[currentRound].winningNumbers = manualNumbers;
-        allRounds[currentRound].timestamp = block.timestamp;
+    //     allRounds[currentRound].prizePool = address(this).balance;
         
-        // Set submission deadline
-        winnerSubmissionDeadline = block.timestamp + 1 hours;
         
-        // Update last draw time
-        lastDrawTime = block.timestamp;
+    //     // Set winning numbers
+    //     allRounds[currentRound].winningNumbers = manualNumbers;
+    //     allRounds[currentRound].timestamp = block.timestamp;
         
-        // Simulate VRF completion
-        emit DrawStarted(currentRound);
-        emit DrawFulfilled(1234, manualNumbers);  // Dummy request ID 1234
+    //     // Set submission deadline
+    //     winnerSubmissionDeadline = block.timestamp + 1 hours;
         
-        // Finalization will happen through distributePrizes(5)
-    }  
+    //     // Update last draw time
+    //     lastDrawTime = block.timestamp;
+        
+    //     // Simulate VRF completion
+    //     emit DrawStarted(currentRound);
+    //     emit DrawFulfilled(1234, manualNumbers);  // Dummy request ID 1234
+        
+    //     // Finalization will happen through distributePrizes(5)
+    // }  
 }
